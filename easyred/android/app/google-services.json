@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "983642926632",
+    "project_id": "easy-a2a74",
+    "storage_bucket": "easy-a2a74.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983642926632:android:6502dc343ab9150f6d8f1d",
+        "android_client_info": {
+          "package_name": "com.example.easyred"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOGeeNALcv16a-x4hpHpxhC7EBp1_fdQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
