@@ -1,7 +1,10 @@
+import 'package:easyred/Pages/AuthUsers/verificateEmail.dart';
+import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:page_transition/page_transition.dart';
 
 class AuthenticationServices with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,9 +41,45 @@ class AuthenticationServices with ChangeNotifier {
 
       // uid indicador unico para cada usuario
       userUid = user.uid;
+
+      if (FirebaseAuth.instance.currentUser!.emailVerified) {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: HomePage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      } else {
+        Navigator.pushReplacement(
+            context,
+            PageTransition(
+                child: VerificateEmailPage(),
+                type: PageTransitionType.rightToLeftWithFade));
+      }
+
       notifyListeners();
     } catch (e) {
-      print(e);
+      if (e is FirebaseAuthException) {
+        switch (e.code) {
+          case 'email-already-in-use':
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('El email ya está en uso'),
+              ),
+            ); break;
+          case 'weak-password':
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('La contraseña es muy débil'),
+              ),
+            ); break;
+          default :
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error al registrar el usuario'),
+              ),
+            ); break;
+        }
+      }
     }
   }
 
@@ -80,4 +119,5 @@ class AuthenticationServices with ChangeNotifier {
       }
     }
   }
+
 }

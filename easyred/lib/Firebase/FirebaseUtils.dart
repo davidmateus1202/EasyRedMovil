@@ -24,17 +24,16 @@ class FirebaseUtils with ChangeNotifier {
 
   Future getImage(BuildContext context) async {
     final pickerImage = await picker.pickImage(source: ImageSource.gallery);
-    pickerImage != null
-        ? userAvatar = File(pickerImage.path)
-        : print('Select a image');
-
-    notifyListeners();
+    userAvatar = File(pickerImage!.path);
+    print(userAvatar);
   }
 
   Future<bool> uploadFile(BuildContext context) async {
     final FirebaseStorage _storage = FirebaseStorage.instance;
     var image =
         Provider.of<FirebaseUtils>(context, listen: false).getUserAvatar;
+
+    print(image);
 
     final String namefile = image.path.split('/').last;
 
@@ -74,6 +73,7 @@ class FirebaseUtils with ChangeNotifier {
   }
 
   Future createUser(BuildContext context, dynamic data) async {
+    print(data);
     return FirebaseFirestore.instance
         .collection('users')
         .doc(Provider.of<AuthenticationServices>(context, listen: false)
@@ -81,26 +81,24 @@ class FirebaseUtils with ChangeNotifier {
         .set(data);
   }
 
-Future initUserData(BuildContext context) async {
-  try {
-    DocumentSnapshot doc = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(Provider.of<AuthenticationServices>(context, listen: false)
-            .getUserUid)
-        .get();
+  Future initUserData(BuildContext context) async {
+    try {
+      DocumentSnapshot doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(Provider.of<AuthenticationServices>(context, listen: false)
+              .getUserUid)
+          .get();
 
-    print('Informacion del usuario');
+      print('Informacion del usuario');
 
-    initUserEmail = doc['userEmail'];
-    initUserAvatar = doc['userImage'];
-    initUsername = doc['username'];
+      initUserAvatar = doc['userImage'];
+      initUsername = doc['username'];
 
-    print(initUserEmail);
-    print(initUserAvatar);
-    print(initUsername);
-    print('fin informacion');
-  } catch (e) {
-    print('Error obteniendo información del usuario: $e');
+      print(initUserAvatar);
+      print(initUsername);
+      print('fin informacion');
+    } catch (e) {
+      print('Error obteniendo información del usuario: $e');
+    }
   }
-}
 }

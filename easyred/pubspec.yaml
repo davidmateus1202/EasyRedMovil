@@ -31,12 +31,12 @@ dependencies:
   flutter:
     sdk: flutter
   cloud_firestore: any
-  firebase_auth: ^4.17.8
+  firebase_auth: any
   google_sign_in: ^5.2.1
   firebase_database: any
   firebase_storage: any
   firebase_messaging: any
-  firebase_core: ^2.27.0
+  firebase_core: any
   api_cache_manager: ^1.0.1
   snippet_coder_utils: ^1.0.15
   shared_preferences: any

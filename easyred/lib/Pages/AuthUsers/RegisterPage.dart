@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
@@ -20,13 +21,11 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool _isLogin = false;
-  final _formKeyname = GlobalKey<FormFieldState>();
   final _formKeyemail = GlobalKey<FormFieldState>();
   final _formKeypassword = GlobalKey<FormFieldState>();
 
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/images/1.png',
@@ -78,43 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   type: PageTransitionType.leftToRight));
                         })
                 ])),
-                SizedBox(
-                  height: 36,
-                ),
-                Container(
-                  height: 60,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: TextFormField(
-                    key: _formKeyname,
-                    controller: _nameController,
-                    onChanged: (value) {
-                      _formKeyname.currentState?.validate();
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Name invalido';
-                      }
-                    },
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person, color: HexColor('8E32BE')),
-                      label: Text('Name'),
-                      labelStyle: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          color: HexColor('8E32BE'),
-                          fontWeight: FontWeight.normal),
-                      hintText: 'Name',
-                      hintStyle: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          color: HexColor('8E32BE'),
-                          fontWeight: FontWeight.normal),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(36)),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 24),
+                const SizedBox(height: 36),
                 Container(
                   height: 60,
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -183,19 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 24),
-                SizedBox(height: 24),
-                FloatingActionButton(
-                  onPressed: () {
-                    Provider.of<RegisterPhoto>(context, listen: false)
-                        .showModalButtonProfile(context);
-                  },
-                  mini: true,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(36)),
-                  child: Icon(Icons.add, color: HexColor('8E32BE')),
-                ),
-                SizedBox(height: 24),
+                SizedBox(height: 72),
                 Container(
                   height: 40,
                   width: MediaQuery.of(context).size.width * 0.8,
@@ -204,49 +155,19 @@ class _RegisterPageState extends State<RegisterPage> {
                       setState(() {
                         _isLogin = true;
                       });
-                      if (_formKeyname.currentState!.validate() &&
-                          _formKeyemail.currentState!.validate() &&
-                          _formKeypassword.currentState!.validate() &&
-                          Provider.of<FirebaseUtils>(context, listen: false)
-                                  .userAvatarUrl !=
-                              null) {
+                      if (_formKeyemail.currentState!.validate() &&
+                          _formKeypassword.currentState!.validate()) {
                         Provider.of<AuthenticationServices>(context,
                                 listen: false)
-                            .createAccount(_emailController.text,
-                                _passwordController.text, context)
-                            .whenComplete(() {
-                          Provider.of<FirebaseUtils>(context, listen: false)
-                              .createUser(context, {
-                            'userUid': Provider.of<AuthenticationServices>(
-                                    context,
-                                    listen: false)
-                                .userUid,
-                            'userEmail': _emailController.text,
-                            'username': _nameController.text,
-                            'userImage': Provider.of<FirebaseUtils>(context,
-                                    listen: false)
-                                .getUserAvatarUrl
-                          }).whenComplete(() {
-                            if (FirebaseAuth
-                                .instance.currentUser!.emailVerified) {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: HomePage(),
-                                      type: PageTransitionType.leftToRight));
-                            } else {
-                              Navigator.pushReplacement(
-                                  context,
-                                  PageTransition(
-                                      child: VerificateEmailPage(),
-                                      type: PageTransitionType.leftToRight));
-                            }
-                          });
-                        });
+                            .createAccount(_emailController.text.trim(),
+                                _passwordController.text.trim(), context);
+
+                        
+
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Usuario o contraseña incorrecta'),
+                            content: Text('${e.toString()}'),
                           ),
                         );
                       }
@@ -317,18 +238,6 @@ class RegisterPhoto with ChangeNotifier {
                                   File('assets/images/1.png')),
                         ),
                       ),
-                      ElevatedButton(
-                          onPressed: () async {
-                            await Provider.of<FirebaseUtils>(context,
-                                    listen: false)
-                                .getImage(context)
-                                .whenComplete(() async {
-                              await Provider.of<FirebaseUtils>(context,
-                                      listen: false)
-                                  .uploadFile(context);
-                            });
-                          },
-                          child: Text('Upload Image')),
                     ],
                   ),
                 )
