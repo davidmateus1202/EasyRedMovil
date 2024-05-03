@@ -2,14 +2,17 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
+import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class FirebasePost with ChangeNotifier {
   String? postImageUrl;
+  String? userLikeUid;
 
   Future<bool> uoloadImagePost(imagePost) async {
     final FirebaseStorage _storage = FirebaseStorage.instance;
@@ -26,31 +29,40 @@ class FirebasePost with ChangeNotifier {
   }
 
   Future createPost(BuildContext context, dynamic data) async {
-    return FirebaseFirestore.instance
-        .collection('Post')
-        .add(data);
+    return FirebaseFirestore.instance.collection('Post').add(data);
   }
 
-  Future initPostData(BuildContext context) async {
+  Future PostId(String postid) async {
     try {
-      DocumentSnapshot doc = await FirebaseFirestore.instance
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Post')
-          .doc(Provider.of<AuthenticationServices>(context, listen: false)
-              .getUserUid)
+          .where('postId', isEqualTo: postid)
           .get();
-      String postImageUrl = doc['postImageUrl'];
-      String postDescription = doc['content'];
-      Timestamp postDate = doc['time'];
-      String user = doc['userUid'];
-
-      print('informacion del ususario a realizar el post');
-
-      print(postImageUrl);
-      print(postDescription);
-      print(postDate);
-      print(user);
+      if (querySnapshot.docs.isNotEmpty) {
+        DocumentSnapshot doc = querySnapshot.docs.first;
+        String postID = doc.id;
+        return postID;
+      } else {
+        return false;
+      }
     } catch (e) {
-      print(e.toString());
+      print(e);
     }
+  }
+
+  Future ObtenerIdPostDelete(String postid) async {
+    try {
+      String post = await PostId(postid);
+      FirebaseFirestore.instance.collection('Post').doc(post).delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future Comment(BuildContext context, String postId, String comment) async {
+    var subDocComents = Uuid();
+    String commentid = subDocComents.v4();
+    String post = await PostId(postId);
+ 
   }
 }

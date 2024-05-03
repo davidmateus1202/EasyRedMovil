@@ -1,5 +1,6 @@
 import 'package:easyred/Pages/AuthUsers/RegisterPage.dart';
-import 'package:easyred/Pages/AuthUsers/verificateEmail.dart';
+import 'package:easyred/Pages/AuthUsers/CreateAccount.dart';
+import 'package:easyred/Pages/AuthUsers/VerificateEmailPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,7 +38,8 @@ class _LoginPageState extends State<LoginPage> {
                   image: AssetImage('assets/images/1.png'), fit: BoxFit.cover)),
         ),
         Center(
-          child: Column(
+          child: SingleChildScrollView(
+            child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Login',
@@ -84,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
               IconButtonGmail(),
             ],
           ),
+          )
         ),
         if (_isLogin)
           Container(
@@ -103,7 +106,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget FormTextEmail() {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: 60,
       child: TextFormField(
         key: _formKeyemail,
         controller: _emailController,
@@ -129,6 +131,7 @@ class _LoginPageState extends State<LoginPage> {
               borderSide: BorderSide(color: HexColor('8E32BE'))),
         ),
         validator: (value) {
+          // ignore: unnecessary_null_comparison
           if (value!.isEmpty || value.contains('@') == false || value == null) {
             return 'Email invalido';
           }
@@ -141,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget FormTextPassword() {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
-      height: 60,
+
       child: TextFormField(
         obscureText: true,
         key: _formKeypassword,

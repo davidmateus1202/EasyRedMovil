@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
+import 'package:easyred/Utils/ContainerPost.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -40,25 +41,11 @@ class PostContent extends StatelessWidget {
               children: snapshot.data!.docs.map((DocumentSnapshot doc) {
                 Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
                 return data['userUid'] == Provider.of<AuthenticationServices>(context, listen: false).getUserUid
-                    ? Card(
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Text(data['username'] ?? ''),
-                              Text(data['userUid'] ?? ''),
-                              Text(data['content'] ?? ''),
-                              Text(data['time'].toString() ?? ''),
-                              Image.network(data['postImageUrl'] ?? ''),
-                            ],
-                          ),
-                        ))
+                    ? ContainerPost(data: data)
                     : Container();
               }).toList(),
             ),
           );
         });
   }
-}
-
-class Authentication {
 }

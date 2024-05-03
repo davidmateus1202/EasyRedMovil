@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
-import 'package:easyred/Pages/AuthUsers/verificateEmail.dart';
+import 'package:easyred/Pages/AuthUsers/CreateAccount.dart';
 import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -79,7 +79,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ])),
                 const SizedBox(height: 36),
                 Container(
-                  height: 60,
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: TextFormField(
                     key: _formKeyemail,
@@ -113,7 +112,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 24),
                 Container(
-                  height: 60,
                   width: MediaQuery.of(context).size.width * 0.8,
                   child: TextFormField(
                     obscureText: true,
@@ -162,8 +160,11 @@ class _RegisterPageState extends State<RegisterPage> {
                             .createAccount(_emailController.text.trim(),
                                 _passwordController.text.trim(), context);
 
-                        
-
+                        Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                                child: CreateAccount(),
+                                type: PageTransitionType.leftToRight));
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

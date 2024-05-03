@@ -25,8 +25,6 @@ class Container_Buttons extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
-              Provider.of<FirebasePost>(context, listen: false)
-                  .initPostData(context);
             },
             child: Text(
               'Post',

@@ -1,6 +1,6 @@
 import 'package:easyred/Firebase/FirebaseUtils.dart';
-import 'package:easyred/Pages/Home/Profile/PostContent.dart';
-import 'package:easyred/Pages/Home/Profile/widgetButtons.dart';
+import 'package:easyred/Utils/PostContent.dart';
+import 'package:easyred/Utils/widgetButtons.dart';
 import 'package:easyred/Pages/Home/drawerHome.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

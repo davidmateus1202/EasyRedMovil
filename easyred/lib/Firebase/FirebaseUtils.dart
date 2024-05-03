@@ -1,8 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
-import 'package:easyred/Pages/AuthUsers/RegisterPage.dart';
-import 'package:easyred/Pages/Home/Feed/HomePage.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -20,15 +19,15 @@ class FirebaseUtils with ChangeNotifier {
   String? initUsername;
   String? get getinitUsername => initUsername;
 
-  String? initUserEmail;
-
   Future getImage(BuildContext context) async {
     final pickerImage = await picker.pickImage(source: ImageSource.gallery);
     userAvatar = File(pickerImage!.path);
     print(userAvatar);
+
   }
 
   Future<bool> uploadFile(BuildContext context) async {
+
     final FirebaseStorage _storage = FirebaseStorage.instance;
     var image =
         Provider.of<FirebaseUtils>(context, listen: false).getUserAvatar;
@@ -73,7 +72,6 @@ class FirebaseUtils with ChangeNotifier {
   }
 
   Future createUser(BuildContext context, dynamic data) async {
-    print(data);
     return FirebaseFirestore.instance
         .collection('users')
         .doc(Provider.of<AuthenticationServices>(context, listen: false)
@@ -90,10 +88,8 @@ class FirebaseUtils with ChangeNotifier {
           .get();
 
       print('Informacion del usuario');
-
       initUserAvatar = doc['userImage'];
       initUsername = doc['username'];
-
       print(initUserAvatar);
       print(initUsername);
       print('fin informacion');

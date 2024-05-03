@@ -1,9 +1,8 @@
 import 'package:easyred/Firebase/FirebasePost.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
-import 'package:easyred/Pages/AuthUsers/RegisterPage.dart';
+import 'package:easyred/Pages/AuthUsers/VerificateEmailPage.dart';
 import 'package:easyred/Pages/AuthUsers/authPage.dart';
-import 'package:easyred/Pages/AuthUsers/verificateEmail.dart';
 import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:easyred/Pages/SplashScreen.dart';
 import 'package:easyred/firebase_options.dart';
@@ -33,13 +32,12 @@ class _EasyRedState extends State<EasyRed> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FirebasePost()),
-        ChangeNotifierProvider(create: (_) => RegisterPhoto()),
         ChangeNotifierProvider(create: (_) => FirebaseUtils()),
         ChangeNotifierProvider(create: (_) => AuthenticationServices())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: VerificateEmailPage(),
+        home: SplashScreen(),
         routes: {
           '/AuthPage': (context) => AuthPage(),
           '/loginPage': (context) => LoginPage(),

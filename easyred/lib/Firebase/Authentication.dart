@@ -1,4 +1,5 @@
-import 'package:easyred/Pages/AuthUsers/verificateEmail.dart';
+import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
+import 'package:easyred/Pages/AuthUsers/CreateAccount.dart';
 import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +53,7 @@ class AuthenticationServices with ChangeNotifier {
         Navigator.pushReplacement(
             context,
             PageTransition(
-                child: VerificateEmailPage(),
+                child: LoginPage(),
                 type: PageTransitionType.rightToLeftWithFade));
       }
 

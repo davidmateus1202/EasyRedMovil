@@ -52,7 +52,7 @@ class _DrawerHomeState extends State<DrawerHome> {
                         type: PageTransitionType.rightToLeftWithFade));
               });
             },
-          )
+          ),
         ],
       ),
     );
