@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/Home/Feed/PostPage.dart';
 import 'package:easyred/Pages/Home/drawerHome.dart';
 import 'package:easyred/Utils/ContainerPost.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
@@ -18,10 +17,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
     Provider.of<FirebaseUtils>(context, listen: false).initUserData(context);
+    print('token usuario ${_auth.currentUser!}');
   }
 
   @override

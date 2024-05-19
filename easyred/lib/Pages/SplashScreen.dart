@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
-import 'package:easyred/Pages/AuthUsers/authPage.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter/material.dart';
 import 'package:snippet_coder_utils/hex_color.dart';

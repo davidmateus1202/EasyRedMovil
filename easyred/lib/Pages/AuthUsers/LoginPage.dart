@@ -1,5 +1,4 @@
 import 'package:easyred/Pages/AuthUsers/RegisterPage.dart';
-import 'package:easyred/Pages/AuthUsers/CreateAccount.dart';
 import 'package:easyred/Pages/AuthUsers/VerificateEmailPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';

@@ -1,7 +1,6 @@
 import 'dart:io';
+import 'package:easyred/Pages/Home/drawerHome.dart';
 import 'package:uuid/uuid.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebasePost.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
@@ -59,6 +58,7 @@ class _PostPageState extends State<PostPage> {
             ],
           )),
         ),
+        drawer: DrawerHome(),
         body: FutureBuilder<void>(
             future: _userData,
             builder: (context, snapshot) {
@@ -338,29 +338,6 @@ class __builPostState extends State<_builPost> {
                                   },
                                   child: Text(
                                     'Camera',
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.normal),
-                                  )),
-                            ],
-                          )),
-                      Container(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          child: Divider()),
-                      Padding(
-                          padding: EdgeInsets.only(top: 24, left: 24),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.photo,
-                                color: HexColor('9A0EE2'),
-                                size: 35,
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  child: Text(
-                                    'Nose',
                                     style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 15,

@@ -1,6 +1,7 @@
-import 'package:easyred/Firebase/FirebasePost.dart';
+import 'package:easyred/Pages/Home/ChatRoom/ChatPage.dart';
+import 'package:easyred/Pages/Home/Feed/PostPage.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 class Container_Buttons extends StatelessWidget {
@@ -25,6 +26,7 @@ class Container_Buttons extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
+              Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft, child: PostPage()));
             },
             child: Text(
               'Post',
@@ -53,7 +55,9 @@ class Container_Buttons extends StatelessWidget {
             borderRadius: BorderRadius.circular(36),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft, child: ChatPage()));
+            },
             child: Text(
               'Message',
               style: TextStyle(

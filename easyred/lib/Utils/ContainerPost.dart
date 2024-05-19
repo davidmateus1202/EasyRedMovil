@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebasePost.dart';
-import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/Home/Feed/CommentPost.dart';
 import 'package:easyred/Utils/ShowDialogs.dart';
 import 'package:flutter/material.dart';
@@ -181,6 +180,7 @@ class ContainerPost extends StatelessWidget {
                     if (_formKeyComment.currentState!.validate()) {
                       Provider.of<FirebasePost>(context, listen: false).Comment(
                           context, data['postId'], commentController.text);
+                      commentController.clear();
                     }
                   },
                   icon: Icon(Icons.send),

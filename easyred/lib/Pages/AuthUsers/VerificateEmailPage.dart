@@ -2,7 +2,6 @@ import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
 import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 

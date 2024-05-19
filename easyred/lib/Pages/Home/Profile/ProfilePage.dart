@@ -97,6 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                       ),
                     ),
+                    /*
                     TextButton(
                       onPressed: () {
                         setState(() {
@@ -128,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           color: HexColor('A138C1'),
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),

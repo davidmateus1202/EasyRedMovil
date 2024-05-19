@@ -4,8 +4,6 @@ import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
 import 'package:easyred/Pages/AuthUsers/CreateAccount.dart';
-import 'package:easyred/Pages/Home/Feed/HomePage.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
