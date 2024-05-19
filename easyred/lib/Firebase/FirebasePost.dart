@@ -33,6 +33,7 @@ class FirebasePost with ChangeNotifier {
   }
 
   Future PostId(String postid) async {
+    String postID;
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Post')
@@ -40,10 +41,10 @@ class FirebasePost with ChangeNotifier {
           .get();
       if (querySnapshot.docs.isNotEmpty) {
         DocumentSnapshot doc = querySnapshot.docs.first;
-        String postID = doc.id;
+        postID = doc.id;
         return postID;
       } else {
-        return false;
+        return postID = '';
       }
     } catch (e) {
       print(e);
@@ -60,9 +61,62 @@ class FirebasePost with ChangeNotifier {
   }
 
   Future Comment(BuildContext context, String postId, String comment) async {
-    var subDocComents = Uuid();
-    String commentid = subDocComents.v4();
     String post = await PostId(postId);
- 
+    var userUid =
+        await Provider.of<AuthenticationServices>(context, listen: false)
+            .getUserUid;
+    DateTime time = DateTime.now();
+    var userImage =
+        await Provider.of<FirebaseUtils>(context, listen: false).initUserAvatar;
+    var username =
+        await Provider.of<FirebaseUtils>(context, listen: false).initUsername;
+
+    print(userUid);
+    print(time);
+    print(userImage);
+    print(username);
+
+    Map<String, dynamic> data = {
+      'comment': comment,
+      'userUid': userUid,
+      'time': time,
+      'userImage': userImage,
+      'username': username,
+    };
+
+    try {
+      FirebaseFirestore.instance
+          .collection('Post')
+          .doc(post)
+          .collection('Comments')
+          .doc()
+          .set(data);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future getComments(context, postId) async {
+    String post = await PostId(postId);
+    if (post != '') {
+      try {
+        print('entro');
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('Post')
+            .doc(post)
+            .collection('Comments')
+            .get();
+        if (querySnapshot.docs.isNotEmpty) {
+          print('entro2');
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      return false;
+    }
   }
 }

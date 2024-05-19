@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Firebase/FirebasePost.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
+import 'package:easyred/Pages/Home/Feed/CommentPost.dart';
+import 'package:easyred/Utils/ShowDialogs.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -115,7 +117,22 @@ class ContainerPost extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 IconButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    String postId =
+                        await Provider.of<FirebasePost>(context, listen: false)
+                            .PostId(data['postId']);
+
+                    bool userComment =
+                        await Provider.of<FirebasePost>(context, listen: false)
+                            .getComments(context, data['postId']);
+
+                    if (userComment) {
+                      CommentsContainer(context, postId);
+                    } else {
+                      ShowDialogs.showAlertDialog(
+                          context, 'Error', 'No hay comentarios para mostrar');
+                    }
+                  },
                   icon: Icon(Icons.comment),
                   color: Colors.blue,
                 ),
@@ -138,21 +155,21 @@ class ContainerPost extends StatelessWidget {
                     onChanged: (value) {
                       _formKeyComment.currentState?.validate();
                     },
-                    controller: TextEditingController(),
+                    controller: commentController,
                     maxLines: null,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.forum, color: Colors.grey[300],),
-                      hintText: 'Write a comment',
-                      hintStyle: TextStyle(
-                        
-                        fontFamily: 'Poppins',
-                        fontSize: 12
-                      ),
+                        prefixIcon: Icon(
+                          Icons.forum,
+                          color: Colors.grey[300],
+                        ),
+                        hintText: 'Write a comment',
+                        hintStyle:
+                            TextStyle(fontFamily: 'Poppins', fontSize: 12),
                         border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(24),
-                    )),
+                          borderRadius: BorderRadius.circular(24),
+                        )),
                     validator: (value) {
-                      if(value!.isEmpty || value == null) {
+                      if (value!.isEmpty || value == null) {
                         return 'Please enter a comment';
                       }
                     },
@@ -160,10 +177,10 @@ class ContainerPost extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-
                     // add funcion to comment
-                    if(_formKeyComment.currentState!.validate()) {
-                      Provider.of<FirebasePost>(context, listen: false).Comment(context, data['postId'], commentController.text);
+                    if (_formKeyComment.currentState!.validate()) {
+                      Provider.of<FirebasePost>(context, listen: false).Comment(
+                          context, data['postId'], commentController.text);
                     }
                   },
                   icon: Icon(Icons.send),

@@ -1,3 +1,4 @@
+import 'package:easyred/Firebase/FirebaseChat.dart';
 import 'package:easyred/Firebase/FirebasePost.dart';
 import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
@@ -33,7 +34,8 @@ class _EasyRedState extends State<EasyRed> {
       providers: [
         ChangeNotifierProvider(create: (_) => FirebasePost()),
         ChangeNotifierProvider(create: (_) => FirebaseUtils()),
-        ChangeNotifierProvider(create: (_) => AuthenticationServices())
+        ChangeNotifierProvider(create: (_) => AuthenticationServices()),
+        ChangeNotifierProvider(create: (_) => FirebaseChat())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

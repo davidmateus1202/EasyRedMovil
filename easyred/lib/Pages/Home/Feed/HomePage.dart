@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easyred/Firebase/Authentication.dart';
+import 'package:easyred/Firebase/FirebaseUtils.dart';
 import 'package:easyred/Pages/Home/Feed/PostPage.dart';
 import 'package:easyred/Pages/Home/drawerHome.dart';
 import 'package:easyred/Utils/ContainerPost.dart';
@@ -9,8 +10,19 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:snippet_coder_utils/hex_color.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<FirebaseUtils>(context, listen: false).initUserData(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +38,11 @@ class HomePage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(36)),
                 onPressed: () {
-                    Navigator.push(
-                        context,
-                        PageTransition(
-                            child: PostPage(),
-                            type: PageTransitionType.leftToRightWithFade));
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          child: PostPage(),
+                          type: PageTransitionType.leftToRightWithFade));
                 },
                 child: Icon(
                   Icons.camera,

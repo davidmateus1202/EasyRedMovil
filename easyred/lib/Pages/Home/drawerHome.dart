@@ -1,5 +1,6 @@
 import 'package:easyred/Firebase/Authentication.dart';
 import 'package:easyred/Pages/AuthUsers/LoginPage.dart';
+import 'package:easyred/Pages/Home/ChatRoom/ChatPage.dart';
 import 'package:easyred/Pages/Home/Feed/HomePage.dart';
 import 'package:easyred/Pages/Home/Profile/ProfilePage.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,16 @@ class _DrawerHomeState extends State<DrawerHome> {
                       type: PageTransitionType.rightToLeftWithFade));
             },
           ),
+          ListTile(
+            title: Text('Chat'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  PageTransition(
+                      child: ChatPage(),
+                      type: PageTransitionType.rightToLeftWithFade));
+            },
+          ),          
           ListTile(
             title: Text('Logout'),
             onTap: () {
